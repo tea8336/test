@@ -1,0 +1,12 @@
+{
+    "python.pythonPath": "C:\\ProgramData\\Miniconda3\\envs\\ywb\\python.exe",
+    "python.linting.pylintEnabled": false,
+    "python.linting.pep8Enabled": true,
+    "python.linting.lintOnSave": true,
+    "python.formatting.provider": "yapf",
+    "terminal.integrated.shell.windows": "C:\\Windows\\system32\\cmd.exe",
+    //"window.zoomLevel": 2,
+    "explorer.confirmDragAndDrop": false,
+    "editor.minimap.enabled": false,
+    "editor.wordWrap": "on",
+}
