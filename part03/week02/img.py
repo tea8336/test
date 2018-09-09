@@ -1,5 +1,5 @@
 # coding:utf-8
-# image.py
+# img.py
 # yang.wenbo
 
 
