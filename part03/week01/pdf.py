@@ -54,7 +54,7 @@ class PDF:
         canvas_pdf.drawText(canvas_obj)
         canvas_pdf.showPage()
         canvas_pdf.save()
-        print('保持成功')
+        print('保存成功')
 
 
 def main():

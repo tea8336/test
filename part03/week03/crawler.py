@@ -42,20 +42,20 @@ class Valve:
 class Recorder:
     '记录类'
 
-    def __init__(self, str_type: str = 'record_csv'):
+    def __init__(self, str_fun_name: str = 'record_csv'):
         '【初始化】'
         self.log = log.Log().log_print()
         self.log.info('初始化Recorder类')
-        self.str_type = str_type
+        self.str_fun_name = str_fun_name
 
     def __call__(self, str_file_name: str, tuple_items: tuple, list_all: list):
         '''【回调函数】
         str_file_name：文件名
         tuple_items：字段
         list_all：数据'''
-        if hasattr(self, self.str_type):
-            function_save = getattr(self, self.str_type)
-            return function_save(str_file_name, tuple_items, list_all)
+        if hasattr(self, self.str_fun_name):
+            fun_obj = getattr(self, self.str_fun_name)
+            return fun_obj(str_file_name, tuple_items, list_all)
         else:
             self.log.info('没有记录方法')
             return {'status': 1, 'statusText': '没有记录方法'}
