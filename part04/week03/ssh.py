@@ -340,7 +340,7 @@ def operate_noparams():
     elif str_input == 'q':
         return
     else:
-        list_hosts = [ str_host for str_host in str_input.split(' ') if str_host.strip() != '']
+        list_hosts = [str_host for str_host in str_input.split(' ') if str_host.strip() != '']
         dict_hosts = start_noparams(list_hosts)
         if dict_hosts != None and len(dict_hosts) > 0:
             for str_host, ssh_obj in dict_hosts.items():

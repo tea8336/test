@@ -122,7 +122,7 @@ def start():
         return
     else:
         print('没有这个操作')
-        start()      
+        start()
 
 
 def main():
