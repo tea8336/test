@@ -1,17 +1,19 @@
 # coding:utf-8
-# mysql.py
+# rabbitmq_server.py
 # yang.wenbo
 
 
 import os
 import sys
-import redis
-import socket
+import math
+import time
+import pika
 
 from sqlalchemy import create_engine, Column, Integer, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
+from rabbitmq_base import Rabbitmq_Base
 from log import Log
 
 STR_HOST = '127.0.0.1'
@@ -164,6 +166,10 @@ class Operate_Ctl:
             return
         self.obj_mysql.mysql_add_article(str_article_title, int(str_author_id), str_article_content, str_article_comment)
         self.list_articles = self.obj_mysql.mysql_show_articles()
+        # # TODO 发布文章
+        # str_author_name = self.obj_mysql.mysql_select_author_by_id(str_author_id)[0].name
+        # str_new_article = '书名：《{}》\n作者：{}\n内容：{}\n评论：{}'.format(str_article_title, str_author_name, str_article_content, str_article_comment)
+        # self.obj_redis.redis_publish(str_author_id, str_new_article)
 
     def ctl_del_author(self):
         '【删除作者】'
@@ -231,155 +237,32 @@ class Operate_Ctl:
         print('article/{}访问量：{}'.format(str_article_id, str_traffic))
 
 
-class Operate_Redis:
+class Operate_RabbitMQ(Rabbitmq_Base):
 
-    def __init__(self, str_host='127.0.0.1', int_port=6379):
+    def __init__(self):
         '【初始化】'
-        Log().log_print().info('init Operate_Redis...')
-        self.obj_clinet = redis.StrictRedis(str_host, int_port)
+        Log().log_print().info('init Operate_RabbitMQ...')
+        super().__init__()
+        self.obj_mysql = Operate_MySQL()
 
-    def redis_count(self, str_page):
-        '【记录访问量】'
-        Log().log_print().info('redis_count...')
-        self.obj_clinet.incr(str_page)
+    def callback(self, obj_channel, obj_method, obj_properties, obj_body):
+        '【callback】'
+        Log().log_print().info('callback...')
+        str_article = self.article(int(obj_body))
+        obj_channel.basic_publish(exchange="", routing_key=obj_properties.reply_to, properties=pika.BasicProperties(correlation_id=obj_properties.correlation_id), body=str(str_article))
+        obj_channel.basic_ack(delivery_tag=obj_method.delivery_tag)
 
-    def redis_query(self, str_page):
-        '【查询访问量】'
-        Log().log_print().info('redis_query...')
-        try:
-            return int(self.obj_clinet.get(str_page))
-        except Exception as e:
-            return 0
-
-
-class Operate_HTTPServer:
-
-    def __init__(self, str_host='127.0.0.1', int_port=8888, int_buffer_size=1024):
-        '''【初始化】
-        str_host：访问设置：localhost（本机）、IP值（IP）、空（任意主机）
-        int_port：端口
-        tuple_addr：地址(str_host, int_port)
-        int_bsize_size：缓存（B）'''
-        Log().log_print().info('init Operate_HTTPServer...')
-        self.str_host = str_host
-        self.int_port = int_port
-        self.tuple_addr = (str_host, int_port)
-        self.int_buffer_size = int_buffer_size
-        self.obj_redis = Operate_Redis()
-
-    def server_start(self):
-        '【开启】'
-        Log().log_print().info('server_start...')
-        # 新建socket
-        socket_obj = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # TCP-SOCK_STREAM，UDP-SOCK_DGRAM
-        # 绑定地址
-        socket_obj.bind(self.tuple_addr)
-        # 监听连接的数量
-        socket_obj.listen(1)
-        # 启动服务，循环发送、接收数据
-        print('启动HTTP服务')
-        while True:
-            # 等待连接
-            print('等待连接...')
-            socket_conn_obj, tuple_conn_addr = socket_obj.accept()
-            print('成功连接：', tuple_conn_addr)
-            # 接收数据
-            data_obj = socket_conn_obj.recv(self.int_buffer_size)
-            # print('收到数据：', data_obj)
-            if data_obj:
-                # 收到数据第一行：GET / HTTP/1.1
-                # 收到数据第一行：GET /article/{all/article_id} HTTP/1.1
-                request_path = data_obj.decode('utf-8').splitlines()[0]
-                str_method, str_path, str_http = request_path.split()
-                print('切换URL地址到：', str_path)
-                str_response = ''
-                # 页面输出
-                list_path = str_path.split('/')
-                if len(list_path) == 3 and list_path[1] == 'article':
-                    dict_json = self.server_select_article(list_path[2])
-                    str_response = self.server_show_jsonpage(dict_json)
-                elif str_path == '/':
-                    str_response = self.server_show_homepage()
-                else:
-                    str_response = self.server_show_errorpage()
-                socket_conn_obj.sendall(str(str_response).encode('gbk'))
-            else:
-                pass
-            socket_conn_obj.close()
-
-    def server_select_article(self, str_article_id):
-        '【查找文章数据】'
-        Log().log_print().info('server_select_article...')
-        dict_article = {'status': 0}
-        list_articles = []
-        try:
-            if str_article_id == 'all':
-                list_articles = Operate_MySQL().mysql_show_articles()
-                dict_article['message'] = 'all articles'
-            else:
-                list_articles = Operate_MySQL().mysql_select_article_by_id(int(str_article_id))
-                dict_article['message'] = 'No.{} article'.format(str_article_id)
-                if len(list_articles) > 0:
-                    self.obj_redis.redis_count('article/{}'.format(str_article_id))
-            dict_article['articles'] = []
-            for model_article in list_articles:
-                dict_article['articles'].append({
-                    'id': model_article[0].article_id,
-                    'article': model_article[0].title,
-                    'author': model_article[1].name,
-                    'content': model_article[0].content})
-            return dict_article
-        except Exception as e:
-            Log().log_print().warning(e)
-            dict_article = {'status': 1, 'message': 'error', 'articles': []}
-            return dict_article
-
-    def server_show_jsonpage(self, dict_json):
-        '【json页面】'
-        Log().log_print().info('server_show_jsonpage...')
-        return (f'''HTTP/1.1 200 OK
-
-        <h1>Hello World</h1>
-        {dict_json}''')
-
-    def server_show_homepage(self):
-        '【欢迎页面】'
-        Log().log_print().info('server_show_homepage...')
-        return '''HTTP/1.1 200 OK
-
-        <h1>Hello World</h1>'''
-
-    def server_show_errorpage(self):
-        '【error页面】'
-        Log().log_print().info('server_show_errorpage...')
-        return '''HTTP/1.1 200 OK
-
-        <h1>404</h1>'''
-
-
-def start():
-    Log().log_print().info('start')
-    dict_operate = {'1': '添加作者', '2': '添加文章', '3': '删除作者', '4': '删除文章', '5': '查看全部作者', '6': '查看全部文章', 'q': '退出'}
-    for str_key in sorted(dict_operate.keys()):
-        print('{}.{}'.format(str_key, dict_operate[str_key]))
-    str_operate = input('请选择操作编码：')
-    obj_operate = Operate_Ctl()
-    if str_operate == '1':
-        obj_operate.ctl_add_author()
-    elif str_operate == '2':
-        obj_operate.ctl_add_article()
-    elif str_operate == '3':
-        obj_operate.ctl_del_author()
-    elif str_operate == '4':
-        obj_operate.ctl_del_article()
-    elif str_operate == '5':
-        obj_operate.ctl_show_authors()
-    elif str_operate == '6':
-        obj_operate.ctl_show_articles()
-    elif str_operate == 'q':
-        print('谢谢使用')
-    else:
-        print('没有这个操作')
+    def article(self, int_article_id):
+        '【查找文章】'
+        Log().log_print().info('article...')
+        list_article = []
+        list_select = self.obj_mysql.mysql_select_article_by_id(int_article_id)
+        if len(list_select) > 0:
+            list_article = list_select[0]
+            str_article = '文章：《{}》\n作者：{}\n内容：{}\n评论{}'.format(list_article[0].title, list_article[1].name, list_article[0].content, list_article[0].comment)
+            return str_article
+        else:
+            return '没有此文章'
 
 
 def help():
@@ -420,7 +303,12 @@ def main():
         elif len(sys.argv) == 3 and sys.argv[1] in ['-t', '--traffic_article']:
             Operate_Ctl().ctl_show_traffic(sys.argv[2])
         elif len(sys.argv) == 1:
-            Operate_HTTPServer().server_start()
+            # Operate_HTTPServer().server_start()
+            # RabbitMQ
+            obj_server = Operate_RabbitMQ()
+            obj_server.make_queue('study')
+            print('start study server...')
+            obj_server.consume(obj_server.callback, 'study')
         else:
             print('没有这个命令')
             help()

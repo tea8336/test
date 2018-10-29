@@ -1,5 +1,5 @@
 # coding:utf-8
-# mysql.py
+# redis_server.py
 # yang.wenbo
 
 
@@ -164,6 +164,10 @@ class Operate_Ctl:
             return
         self.obj_mysql.mysql_add_article(str_article_title, int(str_author_id), str_article_content, str_article_comment)
         self.list_articles = self.obj_mysql.mysql_show_articles()
+        # TODO 发布文章
+        str_author_name = self.obj_mysql.mysql_select_author_by_id(str_author_id)[0].name
+        str_new_article = '书名：《{}》\n作者：{}\n内容：{}\n评论：{}'.format(str_article_title, str_author_name, str_article_content, str_article_comment)
+        self.obj_redis.redis_publish(str_author_id, str_new_article)
 
     def ctl_del_author(self):
         '【删除作者】'
@@ -217,7 +221,7 @@ class Operate_Ctl:
             if int_type == 0:
                 list_select = self.obj_mysql.mysql_select_author_by_id(int(str_return))
             elif int_type == 1:
-                list_select = self.obj_mysql.mysql_select_article_by_id(int(str_return))                
+                list_select = self.obj_mysql.mysql_select_article_by_id(int(str_return))
             else:
                 pass
             if len(list_select) > 0:
@@ -250,6 +254,11 @@ class Operate_Redis:
             return int(self.obj_clinet.get(str_page))
         except Exception as e:
             return 0
+
+    def redis_publish(self, str_author_id, str_new_article):
+        '【发布文章】'
+        Log().log_print().info('redis_publish...')
+        self.obj_clinet.publish(str_author_id, str_new_article)
 
 
 class Operate_HTTPServer:
@@ -355,31 +364,6 @@ class Operate_HTTPServer:
         return '''HTTP/1.1 200 OK
 
         <h1>404</h1>'''
-
-
-def start():
-    Log().log_print().info('start')
-    dict_operate = {'1': '添加作者', '2': '添加文章', '3': '删除作者', '4': '删除文章', '5': '查看全部作者', '6': '查看全部文章', 'q': '退出'}
-    for str_key in sorted(dict_operate.keys()):
-        print('{}.{}'.format(str_key, dict_operate[str_key]))
-    str_operate = input('请选择操作编码：')
-    obj_operate = Operate_Ctl()
-    if str_operate == '1':
-        obj_operate.ctl_add_author()
-    elif str_operate == '2':
-        obj_operate.ctl_add_article()
-    elif str_operate == '3':
-        obj_operate.ctl_del_author()
-    elif str_operate == '4':
-        obj_operate.ctl_del_article()
-    elif str_operate == '5':
-        obj_operate.ctl_show_authors()
-    elif str_operate == '6':
-        obj_operate.ctl_show_articles()
-    elif str_operate == 'q':
-        print('谢谢使用')
-    else:
-        print('没有这个操作')
 
 
 def help():
