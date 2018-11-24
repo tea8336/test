@@ -4,10 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <link rel="stylesheet" href="postcard.css">
+    <title>0503css-yangwenbo-postcard</title>
 </head>
 <body>
-    <h1>aaa</h1>
-    <h1 style="color:blue">bbb</h1>
+    <section>
+        <h1>原图</h1>
+        <div>
+            <figure>
+                <figcaption>正面</figcaption>
+                <img class="postcard" src="files/postcard-01.jpg" alt="postcard-01">
+            </figure>
+            <figure>
+                <figcaption>背面</figcaption>
+                <img class="postcard" src="files/postcard-02.jpg" alt="postcard-02">
+            </figure>
+        </div>
+    </section>
+    <section>
+        <h1>作业</h1>
+        <div>
+            <figure>
+                <figcaption>正面</figcaption>
+                <img class="postcard front" src="files/postcard-01.jpg" alt="postcard-01">
+            </figure>
+            <figure class="postcard-back">
+                <figcaption>背面</figcaption>
+                <div class="postcard-css">
+                    <div class="box1">
+                        <div class="code"></div>
+                        <div class="code"></div>
+                        <div class="code"></div>
+                        <div class="code"></div>
+                        <div class="code"></div>
+                        <div class="code"></div>
+                    </div>
+                    <div class="box2">
+                        <p>中国邮政明信片</p>
+                    </div>
+                    <div class="box3">
+                        <p>Postcard</p>
+                    </div>
+                    <div class="box4">
+                        <figure>
+                            <img class="stamp" src="files/stamp.jpg" alt="stamp">
+                        </figure>
+                    </div>
+                    <div class="box5">
+                        <div class="content"></div>
+                        <div class="content"></div>
+                        <div class="content"></div>
+                    </div>
+                    <div class="box6">
+                        <p>邮政编码</p>
+                    </div>
+                </div>
+            </figure>
+        </div>
+    </section>
 </body>
 </html>

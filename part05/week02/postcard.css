@@ -1,0 +1,115 @@
+figure {
+    display: inline-block;
+}
+
+figcaption {
+    text-align: center;
+}
+
+.postcard {
+    width: 500px;
+    margin: 10px;
+    border: 2px solid #000000;
+}
+
+.front {
+    width: 490px;
+    margin: 10px;
+    padding: 5px;
+}
+
+.postcard-back {
+    position: relative;
+    top: -268px;
+}
+
+.postcard-css {
+    display: grid;
+    width: 490px;
+    grid-template-columns: repeat(10, 1fr);
+    grid-auto-rows: 20px;
+    margin: 10px;
+    padding: 5px;
+    border: 2px solid #000000;
+}
+
+.box1 {
+    grid-column: 1/6;
+    grid-row: 1/3;
+    margin-top: 20px;
+    margin-left: 18px;
+}
+
+.code {
+    width: 22px;
+    height: 22px;
+    border: 1px solid #947d75;
+    display: inline-block;
+    margin: 1.2px;
+}
+
+.box2 {
+    grid-column: 6/9;
+    grid-row: 1/2;
+    margin-left: -3px;
+    padding-top: 2px;
+}
+
+.box2 p {
+    font-family: "SimHei";
+    font-size: 15px;
+    letter-spacing: 1px;
+}
+
+.box3 {
+    grid-column: 6/9;
+    grid-row: 2/3;
+    margin-top: 5px;
+    padding-left: 30px;
+}
+
+.box3 p {
+    font-family: "SimHei";
+    font-size: 1px;
+}
+
+
+.box4 {
+    grid-column: 9/11;
+    grid-row: 1/7;
+}
+
+.box4 figure {
+    margin-top: 2px;
+    margin-left: 14px;
+}
+
+.stamp {
+    width: 74px;
+    border: 2px solid #b6b6b6;
+}
+
+.box5 {
+    grid-column: 6/11;
+    grid-row: 8/12;
+    margin-left: 36px;
+}
+
+.content {
+    height: 34px;
+    width: 188px;
+    border-bottom: 2px solid #b6b6b6;
+}
+
+.box6 {
+    grid-column: 8/10;
+    grid-row: 14/16;
+    margin-top: 5px;
+    margin-left: 10px;
+}
+
+.box6 p {
+    font-family: "SimHei";
+    font-size: 14px;
+    letter-spacing: 1px;
+}
