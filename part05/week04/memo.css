@@ -1,0 +1,304 @@
+/* css初始化，去除各个浏览器默认样式 */
+body,
+ol,
+ul,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+th,
+td,
+dl,
+dd,
+form,
+fieldset,
+legend,
+input,
+textarea,
+select {
+    margin: 0;
+    padding: 0
+}
+
+body {
+    font: 12px"宋体", "Arial Narrow", HELVETICA;
+    background: #fff;
+    -webkit-text-size-adjust: 100%;
+}
+
+a {
+    color: #2d374b;
+    text-decoration: none
+}
+
+a:hover {
+    color: #cd0200;
+    text-decoration: underline
+}
+
+em {
+    font-style: normal
+}
+
+li {
+    list-style: none
+}
+
+img {
+    border: 0;
+    vertical-align: middle
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0
+}
+
+p {
+    word-wrap: break-word
+}
+
+/* 自定义样式 */
+
+.container {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+}
+
+/* ====header==== */
+
+header {
+    padding: 20px;
+    line-height: 30px;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #0000ff;
+    display: flex;
+    justify-content: space-between;
+}
+
+header ul {
+    display: flex;
+    align-items: baseline;
+    list-style-type: none;
+}
+
+header li {
+    margin-right: 20px;
+}
+
+header a {
+    font-size: 16px;
+    font-weight: bold;
+    color: #8c8f8d;
+}
+
+header button {
+    padding: 8px 25px;
+    color: #ffffff;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    background: #0000ff;
+}
+
+/* ====div==== */
+
+.memo-container {
+    display: flex;
+    flex: 1;
+}
+
+.memo-aside{
+    flex:1;
+    padding: 20px;
+    margin-right: 10px;
+    background: #e9e7e7;
+}
+
+.memo-aside ul {
+    list-style-type: none;
+    margin-top: 10px;
+    font-size: 15px;
+}
+
+.memo-aside ul>li {
+    padding: 5px 0;
+}
+
+.memo-done {
+    background: #ffffff;
+    /* margin-bottom: 20px; */
+    padding: 20px;
+}
+
+.memo-done h3 {
+    border-bottom: 1px solid #acaaaa;
+}
+
+.memo-done ul {
+    text-decoration-line: line-through;
+}
+
+.memo-memo {
+    flex: 4;
+    padding: 10px;
+    background: #e9e7e7;
+}
+
+.memo-memo h2 {
+    font-size: 24px;
+    margin: 10px;
+    color: #0000ff;
+    border-bottom: 1px solid #000000;
+}
+
+input[type=checkbox] {
+    zoom: 180%;
+}
+
+.memo-memo li {
+    font-size: 30px;
+    list-style-type: none;
+    margin: 10px;
+    margin-left: 20px;
+}
+
+.memo-plan {
+    background: #ffffff;
+    padding: 10px;
+}
+
+.memo-plan table {
+    width: 98%;
+    margin: 10px;
+}
+
+.memo-plan td {
+    vertical-align: top;
+    padding-top: 10px;
+    padding-left: 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#td-1 {
+    width: 49%;
+    height: 100px;
+    background-color: #f3aaaa;
+}
+
+#td-2 {
+    width: 49%;
+    background-color: #f5daa9;
+}
+
+#td-3 {
+    height: 100px;
+    background-color: #a1cdf1;
+}
+
+#td-4 {
+    background-color: #bff7ae;
+}
+
+.memo-modify {
+    height: 190px;
+    padding-left:10px;
+    padding-right:10px; 
+    background: #ffffff;
+}
+
+.memoModify-add {
+    padding: 10px;
+    font-size: 20px;
+    position: relative;
+}
+
+.rdo-1 {
+    color: #ff0000;
+}
+
+.rdo-2 {
+    color: #ff8800;
+}
+
+.rdo-3 {
+    color: #0000ff;
+}
+
+.rdo-4 {
+    color: #00ff00;
+}
+
+.memoModify-add p {
+    position: absolute;
+    left: 25%;
+    margin-top: 20px;
+}
+.memoModify-add input {
+    zoom: 150%;
+    text-align: center;
+}
+
+.memoModify-add input[type=text] {
+    width:65%;
+}
+
+.memoModify-add input[type=submit] {
+    width:50px;
+    margin-right: 10px;
+    color: #ffffff;
+    background-color: #0000ff;
+}
+
+.memoModify-add input[type=reset] {
+    width:50px;
+    margin-right: 10px;
+    color: #ffffff;
+    background-color: #0000ff;
+}
+
+.memoModify-add input[type=button] {
+    width:50px;
+    color: #ffffff;
+    background-color: #0000ff;
+}
+
+.choose-radios {
+    padding-top: 20px;
+}
+
+/* ====footer==== */
+
+footer {
+    color: #ffffff;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 10px;
+    padding: 20px 0;
+    background-color: #0000ff;
+}
+
+footer p {
+    font-size: 18px;
+    padding: 10px;
+}
+
+/* ====to-top==== */
+
+.to-top{
+    display: inline-block;
+    width: 48px;
+    height: 48px;
+    background-color: #00d9ff;
+    border: 1px solid #eeff00;
+    position: fixed;
+    right: 10px;
+    bottom: 15%;
+}

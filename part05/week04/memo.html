@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="memo.css">
+    <title>0503js-yangwenbo-memo</title>
+</head>
+<body>
+    <a name="top"></a>
+    <div class="container">
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="#">首页</a></li>
+                    <li><a href="#">关于</a></li>
+                    <li><a href="#">帮助</a></li>
+                </ul>
+            </nav>
+            <div class="header-btn">
+                <button>登录</button>
+                <button>注册</button>
+            </div>
+        </header>
+        <div class="memo-container">
+            <aside class="memo-aside">
+                <div class="memo-done">
+                    <h3 >已完成</h3>
+                    <ul id="memoDone-list"></ul>
+                </div>
+            </aside>
+            <div class="memo-memo">
+                <div class="memo-plan">
+                    <h2>今日计划</h2>
+                    <table>
+                        <tr>
+                            <td id="td-1"></td>
+                            <td id="td-2"></td>
+                        </tr>
+                        <tr>
+                            <td id="td-3"></td>
+                            <td id="td-4"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="memo-modify">
+                    <h2>添加备忘录</h2>
+                    <div class="memoModify-add">
+                        <form action="">
+                            <label for="item">输入: <input type="text" id="newItem" placeholder="需要做的事"></label>
+                            <div class="choose-radios">
+                                <label for="choose" class="rdo-1">重要又很紧急
+                                    <input type="radio" value="1" name="choose" checked>
+                                </label>
+                                <label for="choose" class="rdo-2">重要但不紧急
+                                    <input type="radio" value="2" name="choose">
+                                </label>
+                                <label for="choose" class="rdo-3">不重要但紧急
+                                    <input type="radio" value="3" name="choose">
+                                </label>
+                                <label for="choose" class="rdo-4">不重要不紧急
+                                    <input type="radio" value="4" name="choose">
+                                </label>
+                            </div>
+                            <p>
+                                <input type="submit" value="添加" onclick="addToDo(); return false;">
+                                <input type="reset" value="重置">
+                                <input type="button" value="清空" onclick="storageModify()">
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="#top" class="to-top">👆👆👆👆👆👆👆👆👆👆👆👆</a>
+        <footer>
+            <p>0503js-yangwenbo-memo</p>
+        </footer>
+        <script src="memo.js"></script>
+    </div>
+</body>
+</html>
