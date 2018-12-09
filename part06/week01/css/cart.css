@@ -1,0 +1,272 @@
+/* css初始化，去除各个浏览器默认样式 */
+body,
+ol,
+ul,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+th,
+td,
+dl,
+dd,
+form,
+fieldset,
+legend,
+input,
+textarea,
+select {
+    margin: 0;
+    padding: 0
+}
+
+body {
+    font: 12px"宋体", "Arial Narrow", HELVETICA;
+    background: #fff;
+    -webkit-text-size-adjust: 100%;
+}
+
+a {
+    color: #2d374b;
+    text-decoration: none
+}
+
+a:hover {
+    color: #cd0200;
+    text-decoration: underline
+}
+
+em {
+    font-style: normal
+}
+
+li {
+    list-style: none
+}
+
+img {
+    border: 0;
+    vertical-align: middle
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0
+}
+
+p {
+    word-wrap: break-word
+}
+
+/* 自定义样式 */
+
+.container {
+    margin: 0 auto;
+    width: 1000px;
+    margin-top: 25px;
+}
+
+/* ====logo==== */
+
+.logo {
+    float: left;
+    width: 200px;
+}
+
+.logo img{
+    width: 200px;
+    height: 80px;
+}
+
+/* ====addr==== */
+
+.addr {
+    float: right;
+    width: 266px;
+    height: 30px;
+    margin-top: 35px;
+}
+
+.addr select {
+    width: 200px;
+    height: 30px;
+}
+
+/* ====cart-header==== */
+
+.cart-header table {
+    width: 1000px;
+    height: 40px;
+    margin-top: 20px;
+    text-align: center;
+    color: #6b6c6d;
+    background-color: #eeeef0;
+}
+
+.cart-header th:nth-child(-n+2) {
+    width: 30px;
+}
+
+.cart-header th:nth-child(3) {
+    width: 440px;
+    padding-left: 100px;
+    text-align: left;
+}
+
+.cart-header th:nth-child(n+4) {
+    width: 100px;
+}
+
+.cart-header th:nth-child(7) {
+    width: 80px;
+    padding-left: 20px;
+    text-align: left;
+}
+
+/* ====cart-jdzy==== */
+
+.cart-jdzy {
+    width: 1000px;
+    height: 40px;
+}
+
+.cart-jdzy input {
+    width: 30px;
+    margin-top: 20px;
+}
+
+.cart-jdzy span {
+    padding: 3px;
+    color: #ffffff;
+    background-color: #ff0000;
+}
+
+/* ====cart-cart==== */
+
+.cart-cart table {
+    width: 1000px;
+    margin-top: 5px;
+    text-align: center;
+    border-top: 2px solid #d0d0d1;
+}
+
+.cart-cart img {
+    width: 80px;
+    height: 80px;
+}
+
+.cart-cart td {
+    vertical-align: top;
+    padding: 0px;
+    padding-top: 20px;
+}
+
+.cart-cart tr td:nth-child(1) {
+    width: 30px;
+}
+
+.cart-cart tr td:nth-child(2) {
+    width: 120px;
+    height: 100px;
+}
+
+.cart-cart tr td:nth-child(3) {
+    width: 450px;
+    text-align: left;
+}
+
+.cart-cart tr td:nth-child(n+4) {
+    width: 100px;
+}
+
+.cart-cart tr td:nth-child(7) {
+    width: 80px;
+    padding-left: 20px;
+    text-align: left;
+}
+
+.cart-cart tr td:nth-child(5) p {
+    margin-top: 8px;
+}
+
+.cart-cart tr td:nth-child(5) input {
+    width: 20px;
+    text-align: center;
+}
+
+.cart-cart tr td:nth-child(5) input:nth-child(2) {
+    width: 50px;
+}
+
+.cart-cart tr td:nth-child(6) p:nth-child(1) {
+    margin-top: 2px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.cart-cart tr td:nth-child(6) p:nth-child(2) {
+    margin-top: 10px;
+}
+
+/* ====settlement-modify==== */
+
+.settlement {
+    width: 1000px;
+    height: 60px;
+    color: #6b6c6d;
+    background-color: #eeeef0;
+}
+
+.settlement-modify {
+    float: left;
+    width: 300px;
+    height: 40px;
+    margin-top: 10px;
+}
+
+.settlement-modify input {
+    width: 30px;
+    margin-top: 10px;
+}
+
+.settlement-modify a {
+    color: #6b6c6d;
+}
+
+.settlement-modify a:nth-child(5) {
+    color: #000000;
+    font-weight: bold;
+}
+
+/* ====settlement-settlement==== */
+
+.settlement-settlement {
+    float: right;
+}
+
+.settlement-settlement input {
+    width: 100px;
+    height: 60px;
+    font-size: 18px;
+    color: #ffffff;
+    background-color: #ff0000;
+}
+
+.settlement-settlement span:nth-child(2) {
+    font-weight: bold;
+    color: #ff0000;
+}
+
+.settlement-settlement span:nth-child(3) {
+    margin-right: 20px;
+}
+
+.settlement-settlement span:nth-child(5) {
+    margin-right: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #ff0000;
+}
